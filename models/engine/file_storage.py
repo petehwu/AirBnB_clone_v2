@@ -20,12 +20,19 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """returns a dictionary
         Return:
             returns a dictionary of __object
         """
+        my_dict = {}
+        if cls:
+            for k, v in self.__objects.items():
+                if v.__class__ == cls:
+                    my_dict[k] = v
+            return my_dict
         return self.__objects
+        # return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
@@ -55,3 +62,27 @@ class FileStorage:
                     self.__objects[key] = value
         except FileNotFoundError:
             pass
+
+    def delete(self, obj=None):
+        """deletes obj from __objects if it's inside
+        """
+        # if obj is not None:
+        #     k = str(obj.__class__.__name__) + "." + str(obj.id)
+        #     FileStorage().__objects.pop(k, None)
+        #     FileStorage().save()
+
+        for k, v in FileStorage.__objects.items():
+            if v == obj:
+                self.__objects.pop(k)
+                # we need to break because after we find the key we need to stop the loop
+                # b/c dictionaries are unordered
+                break
+        self.save()
+
+
+
+        # my_dict = dict(FileStorage.__objects)
+        # for k, v in my_dict.items():
+        #     if v == obj:
+        #         del FileStorage.__objects[k]
+        #     self.save()
