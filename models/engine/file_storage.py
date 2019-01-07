@@ -32,7 +32,6 @@ class FileStorage:
                     my_dict[k] = v
             return my_dict
         return self.__objects
-        # return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
@@ -66,17 +65,17 @@ class FileStorage:
     def delete(self, obj=None):
         """deletes obj from __objects if it's inside
         """
-        # if obj is not None:
-        #     k = str(obj.__class__.__name__) + "." + str(obj.id)
-        #     FileStorage().__objects.pop(k, None)
-        #     FileStorage().save()
-
-        for k, v in FileStorage.__objects.items():
-            if v == obj:
-                self.__objects.pop(k)
-                # we need to break because after we find the key we need to stop the loop
-                # b/c dictionaries are unordered
-                break
+        # #print ("THIS IS", obj.__class__.__name__)
+        # keyval = obj.__class__.__name__ + "." + obj.id
+        # #print("keuval: ", keyval)
+        self.__objects.pop(obj.__class__.__name__+ "." + obj.id, None)
+        # for k, v in FileStorage.__objects.items():
+        #     if v == obj:
+        #         print(k)
+        #         self.__objects.pop(k)
+        #         # we need to break because after we find the key we need to stop the loop
+        #         # b/c dictionaries are unordered
+        #         break
         self.save()
 
 

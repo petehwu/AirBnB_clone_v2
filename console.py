@@ -3,7 +3,7 @@
 import cmd
 from models import storage
 from datetime import datetime
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -43,13 +43,9 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
-            # print(my_list)
             params = my_list[1:] #attr, attrs
-            # print(params)
             for param in params:
-                #print(param)
                 k_v = param.split('=')
-                #k_v[1] = k_v[1].strip('"')
                 obj.__dict__[k_v[0]] = eval(k_v[1].replace("_", " "))
             obj.save()
             print("{}".format(obj.id))
