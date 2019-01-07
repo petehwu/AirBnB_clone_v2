@@ -65,23 +65,5 @@ class FileStorage:
     def delete(self, obj=None):
         """deletes obj from __objects if it's inside
         """
-        # #print ("THIS IS", obj.__class__.__name__)
-        # keyval = obj.__class__.__name__ + "." + obj.id
-        # #print("keuval: ", keyval)
-        self.__objects.pop(obj.__class__.__name__+ "." + obj.id, None)
-        # for k, v in FileStorage.__objects.items():
-        #     if v == obj:
-        #         print(k)
-        #         self.__objects.pop(k)
-        #         # we need to break because after we find the key we need to stop the loop
-        #         # b/c dictionaries are unordered
-        #         break
+        self.__objects.pop(obj.__class__.__name__ + "." + obj.id, None)
         self.save()
-
-
-
-        # my_dict = dict(FileStorage.__objects)
-        # for k, v in my_dict.items():
-        #     if v == obj:
-        #         del FileStorage.__objects[k]
-        #     self.save()
