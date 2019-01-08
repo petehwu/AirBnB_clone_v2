@@ -40,7 +40,7 @@ class Place(BaseModel, Base):
     longitude = Column("longitude", Float, nullable=True)
 
     reviews = relationship("Review", backref="place",
-                           cascade="all, delete, delete-orphan")
+                           cascade="all, delete")
 
     @property
     def reviews(self):
