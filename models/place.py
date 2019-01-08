@@ -45,12 +45,12 @@ class Place(BaseModel, Base):
     @property
     def reviews(self):
         r_list = []
-        objects = models.storage.all()
-        for k, v in objects.items():
-            if (v.__class__.__name__ == "Review" and v.place_id == self.id):
-                    r_list.append(v)
-        return(r_list)
-        # for k, v in models.storage.all(models.Review).items():
-        #    if v.place_id == self.id:
-        #        r_list.append(v)
+        # objects = models.storage.all()
+        # for k, v in objects.items():
+        #    if (v.__class__.__name__ == "Review" and v.place_id == self.id):
+        #            r_list.append(v)
         # return(r_list)
+        for v in models.storage.all(models.Review).values():
+            if v.place_id == self.id:
+                r_list.append(v)
+        return(r_list)
