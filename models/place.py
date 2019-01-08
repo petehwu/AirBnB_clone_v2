@@ -45,7 +45,7 @@ class Place(BaseModel, Base):
     @property
     def reviews(self):
         r_list = []
-        for k, v in models.storage.all(models.Place).items():
+        for k, v in models.storage.all(models.Review).items():
             if v.place_id == self.id:
                 r_list.append(v)
         return(r_list)
