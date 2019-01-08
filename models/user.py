@@ -16,8 +16,8 @@ class User(BaseModel, Base):
     __tablename__ = "users"
     email = Column("email", String(128), nullable=False)
     password = Column("password", String(128), nullable=False)
-    first_name = Column("firs_tname", String(128))
-    last_name = Column("last_name", String(128))
+    first_name = Column("first_name", String(128), nullable=True)
+    last_name = Column("last_name", String(128), nullable=True)
 
     places = relationship("Place", backref="user",
                           cascade="all, delete, delete-orphan")

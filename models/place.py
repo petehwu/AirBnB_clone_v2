@@ -35,6 +35,7 @@ class Place(BaseModel, Base):
                        Integer, default=0,  nullable=False)
     price_by_night = Column("price_by_night",
                             Integer, default=0, nullable=False)
+
     latitude = Column("latitude", Float, nullable=True)
     longitude = Column("longitude", Float, nullable=True)
 
