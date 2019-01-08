@@ -6,10 +6,12 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models import State
 from models.state import State
 from models.city import City
-
+from models.user import User
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 class DBStorage():
     """DBStorage Class
@@ -44,11 +46,11 @@ class DBStorage():
             result = self.__session.query(cls).all()
         else:
             result = []
-            # result += self.__session.query(User).all()
+            result += self.__session.query(User).all()
             result += self.__session.query(State).all()
             result += self.__session.query(City).all()
             # result += self.__session.query(Amenity).all()
-            # result += self.__session.query(Place).all()
+            result += self.__session.query(Place).all()
             # result += self.__session.query(Review).all()
         for v in result:
             k = '{}.{}'.format(v.__class__.__name__, v.id)
