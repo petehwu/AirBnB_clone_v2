@@ -7,17 +7,8 @@ import sqlalchemy
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models import State
-from models import City
-from models import Place
-from models import Review
-from models import Amenity
-from models import User
-# from models.state import State
-# from models.city import City
-# from models.place import Place
-# from models.review import Review
-# from models.amenity import Amenity
-# from models.user import User
+from models.state import State
+from models.city import City
 
 
 class DBStorage():
@@ -48,22 +39,20 @@ class DBStorage():
             Args:
                 cls: classname for the queried object
         """
-        classes = [State,
-                   City]
-# User,
-# Amenity,
-# Place,
-# Review]
         all_dict = {}
         if cls:
             result = self.__session.query(cls).all()
         else:
             result = []
-            for o in classes:
-                for v in self.__session.query(o).all():
-                    k = "{}.{}".format(v.__class__.__name__, v.id)
-                    print(k)
-                    all_dict[k] = v
+            # result += self.__session.query(User).all()
+            result += self.__session.query(State).all()
+            result += self.__session.query(City).all()
+            # result += self.__session.query(Amenity).all()
+            # result += self.__session.query(Place).all()
+            # result += self.__session.query(Review).all()
+        for v in result:
+            k = '{}.{}'.format(v.__class__.__name__, v.id)
+            all_dict[k] = v
         return all_dict
 
     def new(self, obj):
