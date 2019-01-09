@@ -1,15 +1,14 @@
 #!/usr/bin/python3
 """This is the place class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship, backref
 import models
+from os import getenv
 
-place_amenity = Table("place_amenity", Base.metadata,
-                      Column("place_id", String(60), primary_key=True,
-                             ForeignKey("places.id"), nullable=False),
-                      Column("amenity_id", String(60), primary_key=True,
-                             ForeignKey("amenities.id"), nullable=False))
+place_amenity = Table("place_amenity", Base.metadata, 
+    Column("place_id", String(60), ForeignKey("places.id"), nullable=False),
+    Column("amenity_id", String(60), ForeignKey("amenities.id"), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -55,23 +54,26 @@ class Place(BaseModel, Base):
     reviews = relationship("Review", backref="place",
                            cascade="all, delete, delete-orphan")
 
-    @property
-    def reviews(self):
-        r_list = []
-        for v in models.storage.all(models.Review).values():
-            if v.place_id == self.id:
-                r_list.append(v)
-        return(r_list)
+    if getenv("HBNB_TYPE_STORAGE") == "file":
+        @property
+        def reviews(self):
+            r_list = []
+            for v in models.storage.all(models.Review).values():
+                if v.place_id == self.id:
+                    r_list.append(v)
+            return(r_list)
+        @property
+        def amenities(self):
+            print("getter")
+            a_list = []
+            for v in self.amenity_ids:
+                for val in  models.storage.all(models.Amenity).values():
+                    if v == val.id:
+                        a_list.append(val)
+            return(a_list)
 
-    @property
-    def amenities(self):
-        a_list = []
-        for k, v in models.storage.all(models.Amenity).items():
-            if v.place_id == self.id:
-                a_list.append(v)
-        return(a_list)
-
-    # @amenities.setter
-    # def amenities(self, value):
-    #     if isinstance(value, Amenity)
-    #         self.amenity_ids.append(value.id)
+        @amenities.setter
+        def amenities(self, value):
+            print("setter")
+            if isinstance(value, Amenity):
+                self.amenity_ids.append(value.id)
