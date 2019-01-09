@@ -49,7 +49,7 @@ class DBStorage():
             result += self.__session.query(User).all()
             result += self.__session.query(State).all()
             result += self.__session.query(City).all()
-            # result += self.__session.query(Amenity).all()
+            result += self.__session.query(Amenity).all()
             result += self.__session.query(Place).all()
             result += self.__session.query(Review).all()
         for v in result:
