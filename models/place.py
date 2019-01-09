@@ -6,9 +6,11 @@ from sqlalchemy.orm import relationship, backref
 import models
 from os import getenv
 
-place_amenity = Table("place_amenity", Base.metadata, 
-    Column("place_id", String(60), ForeignKey("places.id"), nullable=False),
-    Column("amenity_id", String(60), ForeignKey("amenities.id"), nullable=False))
+place_amenity = Table("place_amenity", Base.metadata,
+                      Column("place_id", String(60), ForeignKey("places.id"),
+                             nullable=False),
+                      Column("amenity_id", String(60),
+                             ForeignKey("amenities.id"), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -46,15 +48,13 @@ class Place(BaseModel, Base):
     longitude = Column("longitude", Float, nullable=True)
     amenity_ids = []
 
-    amenities = relationship("Amenity", secondary=place_amenity,
-                             backref="place_amenities", viewonly=False)
-    # amenities = relationship("Amenity", secondary=place_amenity,
-    #                        backref="Place", viewonly=False)
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 backref="place_amenities", viewonly=False)
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete, delete-orphan")
+    else:
 
-    reviews = relationship("Review", backref="place",
-                           cascade="all, delete, delete-orphan")
-
-    if getenv("HBNB_TYPE_STORAGE") == "file":
         @property
         def reviews(self):
             r_list = []
@@ -62,18 +62,21 @@ class Place(BaseModel, Base):
                 if v.place_id == self.id:
                     r_list.append(v)
             return(r_list)
+
         @property
         def amenities(self):
-            print("getter")
+            # print("getter")
+            # print("1", self.name)
+
             a_list = []
             for v in self.amenity_ids:
-                for val in  models.storage.all(models.Amenity).values():
+                for val in models.storage.all(models.Amenity).values():
                     if v == val.id:
                         a_list.append(val)
             return(a_list)
 
         @amenities.setter
-        def amenities(self, value):
+        def amenities(self, obj):
             print("setter")
-            if isinstance(value, Amenity):
-                self.amenity_ids.append(value.id)
+            if isinstance(obj, Amenity):
+                self.amenity_ids.append(obj.id)
