@@ -7,8 +7,13 @@ import models
 from os import getenv
 
 place_amenity = Table("place_amenity", Base.metadata,
+<<<<<<< HEAD
                       Column("place_id", String(60), ForeignKey("places.id"),
                              nullable=False),
+=======
+                      Column("place_id", String(60),
+                             ForeignKey("places.id"), nullable=False),
+>>>>>>> 41614fe631b1a627e4a13d3d711a6499d7011725
                       Column("amenity_id", String(60),
                              ForeignKey("amenities.id"), nullable=False))
 
@@ -48,6 +53,7 @@ class Place(BaseModel, Base):
     longitude = Column("longitude", Float, nullable=True)
     amenity_ids = []
 
+<<<<<<< HEAD
     if getenv("HBNB_TYPE_STORAGE") == "db":
         amenities = relationship("Amenity", secondary=place_amenity,
                                  backref="place_amenities", viewonly=False)
@@ -55,6 +61,17 @@ class Place(BaseModel, Base):
                                cascade="all, delete, delete-orphan")
     else:
 
+=======
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             backref="place_amenity", viewonly=False)
+    # amenities = relationship("Amenity", secondary=place_amenity,
+    #                        backref="Place", viewonly=False)
+
+    reviews = relationship("Review", backref="place",
+                           cascade="all, delete, delete-orphan")
+
+    if getenv("HBNB_TYPE_STORAGE") == "fs":
+>>>>>>> 41614fe631b1a627e4a13d3d711a6499d7011725
         @property
         def reviews(self):
             r_list = []
@@ -65,9 +82,12 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
+<<<<<<< HEAD
             # print("getter")
             # print("1", self.name)
 
+=======
+>>>>>>> 41614fe631b1a627e4a13d3d711a6499d7011725
             a_list = []
             for v in self.amenity_ids:
                 for val in models.storage.all(models.Amenity).values():
@@ -76,7 +96,13 @@ class Place(BaseModel, Base):
             return(a_list)
 
         @amenities.setter
+<<<<<<< HEAD
         def amenities(self, obj):
             print("setter")
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
+=======
+        def amenities(self, value=None):
+            if isinstance(value, Amenity):
+                self.amenity_ids.append(value.id)
+>>>>>>> 41614fe631b1a627e4a13d3d711a6499d7011725
