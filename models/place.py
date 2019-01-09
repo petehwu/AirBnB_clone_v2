@@ -59,6 +59,7 @@ class Place(BaseModel, Base):
     if getenv("HBNB_TYPE_STORAGE") == "fs":
         @property
         def reviews(self):
+            """getter to get reviews for this place"""
             r_list = []
             for v in models.storage.all(models.Review).values():
                 if v.place_id == self.id:
@@ -67,6 +68,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
+            """getter to get amenities for this place"""
             a_list = []
             for v in self.amenity_ids:
                 for val in models.storage.all(models.Amenity).values():
@@ -76,5 +78,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, value=None):
+            """setter to set amenities for this place"""
             if isinstance(value, Amenity):
                 self.amenity_ids.append(value.id)
