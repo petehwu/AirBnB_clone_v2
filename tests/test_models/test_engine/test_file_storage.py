@@ -91,6 +91,36 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(line, "{}")
         self.assertIs(self.storage.reload(), None)
 
+    def test_delete(self):
+        """Tests for if an object is deleted in FileStorage"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        state = State()
+        state.name = "California"
+        state.id = "54321"
+        state.save()
+        self.assertTrue(storage.all(State))
+        storage.delete(state)
+        self.assertFalse(storage.all(State))
+        self.assertNotIsInstance(state.id, dict)
+
+    def test_all_v2(self):
+        """Tests for the updated all method"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        city = City()
+        city.name = "San Francisco"
+        city.id = "98765"
+        city.save()
+        self.assertTrue(storage.all(City))
+        storage.delete(city)
+        self.assertFalse(storage.all(city))
 
 if __name__ == "__main__":
     unittest.main()
