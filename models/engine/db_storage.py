@@ -51,7 +51,7 @@ class DBStorage():
             result += self.__session.query(City).all()
             # result += self.__session.query(Amenity).all()
             result += self.__session.query(Place).all()
-            # result += self.__session.query(Review).all()
+            result += self.__session.query(Review).all()
         for v in result:
             k = '{}.{}'.format(v.__class__.__name__, v.id)
             all_dict[k] = v

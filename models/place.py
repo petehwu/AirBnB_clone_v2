@@ -40,16 +40,11 @@ class Place(BaseModel, Base):
     longitude = Column("longitude", Float, nullable=True)
 
     reviews = relationship("Review", backref="place",
-                           cascade="all, delete")
+                           cascade="all, delete, delete-orphan")
 
     @property
     def reviews(self):
         r_list = []
-        # objects = models.storage.all()
-        # for k, v in objects.items():
-        #    if (v.__class__.__name__ == "Review" and v.place_id == self.id):
-        #            r_list.append(v)
-        # return(r_list)
         for v in models.storage.all(models.Review).values():
             if v.place_id == self.id:
                 r_list.append(v)
