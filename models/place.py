@@ -49,14 +49,14 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     amenities = relationship("Amenity", secondary=place_amenity,
-                             backref="place_amenities", viewonly=False)
+                             backref="place_amenity", viewonly=False)
     # amenities = relationship("Amenity", secondary=place_amenity,
     #                        backref="Place", viewonly=False)
 
     reviews = relationship("Review", backref="place",
                            cascade="all, delete, delete-orphan")
 
-    if getenv("HBNB_TYPE_STORAGE") == "FileStorage":
+    if getenv("HBNB_TYPE_STORAGE") == "fs":
         @property
         def reviews(self):
             r_list = []
@@ -67,7 +67,6 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            print("getter")
             a_list = []
             for v in self.amenity_ids:
                 for val in models.storage.all(models.Amenity).values():
@@ -76,7 +75,6 @@ class Place(BaseModel, Base):
             return(a_list)
 
         @amenities.setter
-        def amenities(self, value):
-            print("setter")
+        def amenities(self, value=None):
             if isinstance(value, Amenity):
                 self.amenity_ids.append(value.id)
