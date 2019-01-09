@@ -6,9 +6,11 @@ from sqlalchemy.orm import relationship, backref
 import models
 from os import getenv
 
-place_amenity = Table("place_amenity", Base.metadata, 
-    Column("place_id", String(60), ForeignKey("places.id"), nullable=False),
-    Column("amenity_id", String(60), ForeignKey("amenities.id"), nullable=False))
+place_amenity = Table("place_amenity", Base.metadata,
+                      Column("place_id", String(60),
+                             ForeignKey("places.id"), nullable=False),
+                      Column("amenity_id", String(60),
+                             ForeignKey("amenities.id"), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -62,12 +64,13 @@ class Place(BaseModel, Base):
                 if v.place_id == self.id:
                     r_list.append(v)
             return(r_list)
+
         @property
         def amenities(self):
             print("getter")
             a_list = []
             for v in self.amenity_ids:
-                for val in  models.storage.all(models.Amenity).values():
+                for val in models.storage.all(models.Amenity).values():
                     if v == val.id:
                         a_list.append(val)
             return(a_list)
