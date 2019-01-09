@@ -54,7 +54,6 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", backref="place",
                                cascade="all, delete, delete-orphan")
     else:
-
         @property
         def reviews(self):
             r_list = []
@@ -65,9 +64,6 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            # print("getter")
-            # print("1", self.name)
-
             a_list = []
             for v in self.amenity_ids:
                 for val in models.storage.all(models.Amenity).values():
