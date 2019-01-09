@@ -37,9 +37,6 @@ class TestConsole(unittest.TestCase):
         """Remove temporary file (file.json) created as a result"""
         try:
             os.remove("file.json")
-            #all_objs = storage.all()
-            #all_objs.clear()
-            #storage.save()
         except Exception:
             pass
 
@@ -244,7 +241,7 @@ class TestConsole(unittest.TestCase):
             val = f.getvalue()
             self.assertFalse("New_Mexico" in val)
             self.assertTrue("New Mexico" in val)
-                               
+
 
 if __name__ == "__main__":
     unittest.main()
