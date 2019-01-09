@@ -5,6 +5,12 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship, backref
 import models
 
+place_amenity = Table("place_amenity", Base.metadata,
+                      Column("place_id", String(60), primary_key=True,
+                             ForeignKey("places.id"), nullable=False),
+                      Column("amenity_id", String(60), primary_key=True,
+                             ForeignKey("amenities.id"), nullable=False))
+
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -22,6 +28,7 @@ class Place(BaseModel, Base):
         amenity_ids: list of Amenity ids
     """
     __tablename__ = "places"
+
     city_id = Column("city_id", String(60),
                      ForeignKey("cities.id"), nullable=False)
     user_id = Column("user_id", String(60),
@@ -38,6 +45,12 @@ class Place(BaseModel, Base):
 
     latitude = Column("latitude", Float, nullable=True)
     longitude = Column("longitude", Float, nullable=True)
+    amenity_ids = []
+
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             backref="place_amenities", viewonly=False)
+    # amenities = relationship("Amenity", secondary=place_amenity,
+    #                        backref="Place", viewonly=False)
 
     reviews = relationship("Review", backref="place",
                            cascade="all, delete, delete-orphan")
@@ -49,3 +62,16 @@ class Place(BaseModel, Base):
             if v.place_id == self.id:
                 r_list.append(v)
         return(r_list)
+
+    @property
+    def amenities(self):
+        a_list = []
+        for k, v in models.storage.all(models.Amenity).items():
+            if v.place_id == self.id:
+                a_list.append(v)
+        return(a_list)
+
+    # @amenities.setter
+    # def amenities(self, value):
+    #     if isinstance(value, Amenity)
+    #         self.amenity_ids.append(value.id)
