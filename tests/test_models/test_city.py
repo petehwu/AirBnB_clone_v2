@@ -5,6 +5,7 @@ import os
 from models.city import City
 from models.base_model import BaseModel
 import pep8
+from os import *
 
 
 class TestCity(unittest.TestCase):
@@ -13,9 +14,13 @@ class TestCity(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """set up for test"""
-        cls.city = City()
-        cls.city.name = "LA"
-        cls.city.state_id = "CA"
+        if os.getenv('HBNB_TYPE_STORAGE') == 'fs':
+            cls.state = State(name="California", id="CA")
+            cls.city = City(name="LA", state_id="CA")
+        else:
+            cls.city = City()
+            cls.city.name = "LA"
+            cls.city.state_id = "CA"
 
     @classmethod
     def teardown(cls):
