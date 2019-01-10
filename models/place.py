@@ -49,7 +49,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     amenities = relationship("Amenity", secondary=place_amenity,
-                             backref="place_amenity", viewonly=False)
+                             backref="place_amenities", viewonly=False)
     # amenities = relationship("Amenity", secondary=place_amenity,
     #                        backref="Place", viewonly=False)
 
