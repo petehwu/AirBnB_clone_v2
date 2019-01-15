@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""script to pack and deploy code"""
 from fabric.api import run, local, env, put
 from datetime import datetime
 from os import path
@@ -28,14 +29,14 @@ def do_pack():
 
 def do_deploy(archive_path):
     """This function deploys packed code to the servers"""
-    if not path.exists(archive_path):
+    if not path.isfile(archive_path):
         return False
     try:
         fonly = archive_path[archive_path.find("/"):]
         ffolder = fonly[:fonly.find(".")]
         dest_path = "/data/web_static/releases"
         result = put(archive_path, "/tmp" + fonly)
-        result = run("rm -rf " + dest_path + ffolder + "/")
+        # result = run("rm -rf " + dest_path + ffolder + "/")
         result = run("mkdir -p " + dest_path + ffolder + "/")
         result = run("tar -xzf /tmp" + fonly + " -C " +
                      dest_path + ffolder + "/")
