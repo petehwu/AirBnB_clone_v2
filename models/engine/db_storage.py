@@ -13,6 +13,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class DBStorage():
     """DBStorage Class
     """
@@ -42,10 +43,14 @@ class DBStorage():
                 cls: classname for the queried object
         """
         all_dict = {}
+        result = []
         if cls:
-            result = self.__session.query(cls).all()
+            cls_dict = {"User": User, "State": State, "City": City,
+                        "Amenity": Amenity, "Place": Place, "Review": Review}
+            result = self.__session.query((cls_dict.get(cls)
+                                           if isinstance(cls, str)
+                                           else cls)).all()
         else:
-            result = []
             result += self.__session.query(User).all()
             result += self.__session.query(State).all()
             result += self.__session.query(City).all()
@@ -80,3 +85,8 @@ class DBStorage():
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         self.__session = scoped_session(session_factory)
+
+    def close(self):
+        """calls remove method on private session attribute
+        """
+        self.__session.remove()

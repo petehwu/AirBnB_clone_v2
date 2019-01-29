@@ -26,9 +26,12 @@ class FileStorage:
             returns a dictionary of __object
         """
         my_dict = {}
+        cls_dict = {"User": User, "State": State, "City": City,
+                    "Amenity": Amenity, "Place": Place, "Review": Review}
         if cls:
             for k, v in self.__objects.items():
-                if v.__class__ == cls:
+                if v.__class__ == (cls_dict.get(cls)
+                                   if isinstance(cls, str) else cls):
                     my_dict[k] = v
             return my_dict
         return self.__objects
@@ -68,3 +71,8 @@ class FileStorage:
         if obj:
             self.__objects.pop(obj.__class__.__name__ + "." + obj.id, None)
             self.save()
+
+    def close(self):
+        """just call reload to deserialize JSON file to objects
+        """
+        self.reload()
