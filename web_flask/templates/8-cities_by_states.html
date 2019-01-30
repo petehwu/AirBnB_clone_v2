@@ -11,9 +11,7 @@
 				{{ item.id }}: <B>{{ item.name }}</B>
 				<UL>
                                         {% for i2 in item.cities|sort(attribute="name") %}
-                                        <LI>
-                                                {{ i2.id }}: <B>{{ i2.name }}</B>
-                                        </LI>
+						<LI>{{ i2.id }}: <B>{{ i2.name }}</B></LI>
                                         {% endfor %}
 
 				</UL>
