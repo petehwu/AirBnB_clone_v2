@@ -35,21 +35,20 @@ def show_cities_states():
 @app.route('/states')
 @app.route('/states/<sid>')
 def show_state_or_city(sid=None):
-    """This method displays states or city states 
+    """This method displays states or city states
     """
     states = storage.all("State")
     if (sid):
         key = "State." + sid
         if key in states:
-            return render_template('9-states.html',s_list=states[key])
+            return render_template('9-states.html', s_list=states[key])
         else:
-            return render_template('9-states.html',s_list=None)
+            return render_template('9-states.html', s_list=None)
     else:
         s_list = []
         for s in states.values():
             s_list.append(s)
         return render_template('7-states_list.html', s_list=s_list)
-
 
 
 @app.teardown_appcontext
