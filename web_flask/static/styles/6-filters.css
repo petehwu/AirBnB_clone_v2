@@ -1,0 +1,93 @@
+.filters{
+background-color: #FFFFFF;
+height: 70px;
+width: 100%;
+border-radius: 4px;
+border: 1px solid #DDDDDD;
+position: relative;
+}
+.btn{
+font-size: 18px;
+background-color: #FF5A5F;
+color: #FFFFFF;
+height: 48px;
+width: 20%;
+border-radius: 4px;
+border: none;
+position: absolute;
+right: 30px;
+top: 11px;
+}
+.btn:hover{
+opacity:.9;
+}
+.filters h2{
+font-size: 16px;
+margin-top: 0%;
+margin-bottom: 3%;
+margin-left: 0%;
+}
+.filters h3{
+font-weight: 600;
+display: flex;
+justify-content: left;
+align-items: center;
+margin-left: 15%;
+margin-bottom: 0%;
+}
+.filters h4{
+font-weight: 400;
+font-size: 14px;
+display: flex;
+align-items: center;
+margin-top: 0%;
+margin-left: 15%;
+}
+.locations{
+position: absolute;
+height: 100%;
+width: 25%;
+border-right: 1px solid #DDDDDD;
+}
+.amenities{
+position: absolute;
+height: 100%;
+margin-left: 25%;
+width: 25%;
+}
+.popover ul{
+list-style-type: none;
+padding-inline-start: 0px;
+margin-bottom: 10%;
+}
+.popover .lvl1{
+padding-inline-start: 10%;
+}
+.popover .lvl2{
+padding-inline-start: 12%;
+margin-bottom: 5%;
+}
+.popover{
+display: none;
+margin-top: 0px;
+padding-top: 10%;
+padding-bottom: 15%;
+list-style-type: none;
+background-color: #FAFAFA;
+width: 100%;
+border: 1px solid #DDDDDD;
+border-top: none;
+border-radius: 4px;
+padding-inline-start: 0%;
+position:relative;
+max-height:300px;
+overflow:scroll;
+}
+.locations:hover .popover{
+display: inline-block;
+z-index: 1;
+}
+.amenities:hover .popover{
+display: inline-block;
+z-index: 1;
+}
