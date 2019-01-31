@@ -14,10 +14,7 @@ app.url_map.strict_slashes = False
 def show_states():
     """This method displays all the states in storage
     """
-    states = storage.all("State")
-    s_list = []
-    for s in states.values():
-        s_list.append(s)
+    s_list = list(storage.all("State").values())
     return render_template('7-states_list.html', s_list=s_list)
 
 
@@ -25,10 +22,7 @@ def show_states():
 def show_cities_states():
     """This method displays all the cities by states
     """
-    states = storage.all("State")
-    s_list = []
-    for s in states.values():
-        s_list.append(s)
+    s_list = list(storage.all("State").values())
     return render_template('8-cities_by_states.html', s_list=s_list)
 
 

@@ -14,10 +14,7 @@ app.url_map.strict_slashes = False
 def show_states():
     """This method displays all the states in storage
     """
-    states = storage.all("State")
-    s_list = []
-    for s in states.values():
-        s_list.append(s)
+    s_list = list(storage.all("State").values())
     return render_template('7-states_list.html', s_list=s_list)
 
 
@@ -25,10 +22,7 @@ def show_states():
 def show_cities_states():
     """This method displays all the cities by states
     """
-    states = storage.all("State")
-    s_list = []
-    for s in states.values():
-        s_list.append(s)
+    s_list = list(storage.all("State").values())
     return render_template('8-cities_by_states.html', s_list=s_list)
 
 
@@ -37,17 +31,15 @@ def show_cities_states():
 def show_state_or_city(sid=None):
     """This method displays states or city states
     """
-    states = storage.all("State")
     if (sid):
         key = "State." + sid
         if key in states:
-            return render_template('9-states.html', s_list=states[key])
+            return render_template('9-states.html',
+                                   s_list=storage.all("State").get(key))
         else:
             return render_template('9-states.html', s_list=None)
     else:
-        s_list = []
-        for s in states.values():
-            s_list.append(s)
+        s_list = list(storage.all("State").values())
         return render_template('7-states_list.html', s_list=s_list)
 
 
@@ -55,14 +47,8 @@ def show_state_or_city(sid=None):
 def show_hbnb():
     """This method will pass the filters into the template
     """
-    s_list = []
-    a_list = []
-    states = storage.all("State")
-    amenities = storage.all("Amenity")
-    for s in states.values():
-        s_list.append(s)
-    for a in amenities.values():
-        a_list.append(a)
+    s_list = list(storage.all("State").values())
+    a_list = list(storage.all("Amenity").values())
     return render_template('10-hbnb_filters.html',
                            s_list=s_list, a_list=a_list)
 

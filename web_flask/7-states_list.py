@@ -13,10 +13,7 @@ app.url_map.strict_slashes = False
 def show_states():
     """This method displays all the states in storage
     """
-    states = storage.all("State")
-    s_list = []
-    for s in states.values():
-        s_list.append(s)
+    s_list = list(storage.all("State").values())
     return render_template('7-states_list.html', s_list=s_list)
 
 
