@@ -57,7 +57,7 @@
 						<div class=number_rooms><span>{{ place.number_rooms }} Room</span></div>
 						<div class=number_bathrooms><span>{{ place.number_bathrooms }} Bathroom</span></div>
 					</div>
-					<div class=user><b>Owner:</b> {{ place.uname }}</div>
+					<div class=user><b>Owner:</b> {{ place.user.first_name }} {{ place.user.last_name }}</div>
 					{% autoescape false %}
 					   <div class=description>{{ place.description }}</div>
 					{% endautoescape %}

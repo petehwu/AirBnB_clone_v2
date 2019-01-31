@@ -60,11 +60,6 @@ def show_hb():
     s_list = list(storage.all("State").values())
     a_list = list(storage.all("Amenity").values())
     p_list = list(storage.all("Place").values())
-    u_dict = storage.all("User")
-    for p in p_list:
-        u_key = 'User.' + p.user_id
-        p.uname = "{} {}".format(u_dict.get(u_key).first_name,
-                                 u_dict.get(u_key).last_name)
     return render_template('100-hbnb.html', s_list=s_list, a_list=a_list,
                            p_list=p_list)
 
